@@ -15,7 +15,16 @@ const App = () => {
   const [selected, setSelected] = useState(0)
 
   const nextAnecdote= ()=>{
-    setSelected(selected+1)
+    setSelected(getRandomInt(0, anecdotes.length))
+  }
+
+  function getRandomInt(min, max){
+    const minVal = Math.ceil(min)
+    const maxVal = Math.floor(max)
+    
+    return (
+      Math.floor(Math.random()*(maxVal-minVal) +minVal)
+    )
   }
 
   return (
