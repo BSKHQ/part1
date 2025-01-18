@@ -11,49 +11,69 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
   ]
-   
+
   const [selected, setSelected] = useState(getRandomInt(0, anecdotes.length))
 
-  function nextAnecdote(){
+  const [votes, setVotes] = useState({ 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 })
+
+  function nextAnecdote() {
     setSelected(getRandomInt(0, anecdotes.length))
   }
 
-  function getRandomInt(min, max){
+  function getRandomInt(min, max) {
     const minVal = Math.ceil(min)
     const maxVal = Math.floor(max)
-    
+
     return (
-      Math.floor(Math.random()*(maxVal-minVal) +minVal)
+      Math.floor(Math.random() * (maxVal - minVal) + minVal)
     )
   }
 
-  const [votes, setVotes] = useState({0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0})
-  
-  function vote(){
-  setVotes({...votes, [selected]:votes[selected] +1})
+  function vote() {
+    setVotes({ ...votes, [selected]: votes[selected] + 1 })
+  }
+
+  function mostVotes() {
+    let mostVotes = 0
+    let anecdote = 0
+    for (const val in votes) {
+      if (votes[val] > mostVotes) {
+        mostVotes = votes[val]
+        anecdote = val
+      }
+    }
+    return ([mostVotes, anecdote])
   }
 
   return (
     <div>
+      <Heading text='Anecdote of the day' />
       {anecdotes[selected]}
       <VoteCount votes={votes[selected]} />
       <Button text='vote' handleClick={vote} />
       <Button text='next anecdote' handleClick={nextAnecdote} />
+      <Heading text='Anecdote with the most votes' />
+      {anecdotes[mostVotes()[1]]}
+      <VoteCount votes={mostVotes()[0]} />
     </div>
   )
 }
 
-const VoteCount=({votes})=>{
-  if (votes === 1){
+const VoteCount = ({ votes }) => {
+  if (votes === 1) {
     return (<div>Has {votes} vote</div>)
   }
   return (<div>Has {votes} votes</div>)
 }
 
-const Button =({text, handleClick})=>{
+const Button = ({ text, handleClick }) => {
   return (
     <><button onClick={handleClick}>{text}</button></>
   )
+}
+
+const Heading = ({ text }) => {
+  return (<h1>{text}</h1>)
 }
 
 export default App
