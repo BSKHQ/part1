@@ -12,9 +12,9 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
    
-  const [selected, setSelected] = useState(0)
+  const [selected, setSelected] = useState(getRandomInt(0, anecdotes.length))
 
-  const nextAnecdote= ()=>{
+  function nextAnecdote(){
     setSelected(getRandomInt(0, anecdotes.length))
   }
 
@@ -27,17 +27,32 @@ const App = () => {
     )
   }
 
+  const [votes, setVotes] = useState({0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0})
+  
+  function vote(){
+  setVotes({...votes, [selected]:votes[selected] +1})
+  }
+
   return (
     <div>
       {anecdotes[selected]}
+      <VoteCount votes={votes[selected]} />
+      <Button text='vote' handleClick={vote} />
       <Button text='next anecdote' handleClick={nextAnecdote} />
     </div>
   )
 }
 
+const VoteCount=({votes})=>{
+  if (votes === 1){
+    return (<div>Has {votes} vote</div>)
+  }
+  return (<div>Has {votes} votes</div>)
+}
+
 const Button =({text, handleClick})=>{
   return (
-    <div><button onClick={handleClick}>{text}</button></div>
+    <><button onClick={handleClick}>{text}</button></>
   )
 }
 
