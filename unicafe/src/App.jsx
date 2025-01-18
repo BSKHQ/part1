@@ -33,7 +33,13 @@ const Statistics =({good,neutral,bad})=>{
     }
 
     function average(){
-        return (all()/3)
+        let g=1
+        let n=0
+        let b=-1
+
+        const sum = (good*g) + (neutral*n) + (bad*b)
+
+        return (sum/all())
     }
 
     function positive(){
