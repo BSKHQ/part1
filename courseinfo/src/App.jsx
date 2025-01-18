@@ -30,7 +30,6 @@ const App = () => {
 }
 
 const Header = (props) => {
- // console.log(props.course.parts[0])
   return (
     <h1>{props.course.name}</h1>
   )
@@ -53,7 +52,6 @@ const Total = (props) => {
 }
 
 const Part = (props) => {
- // console.log(props)
   return (
     <p>{props.part.name} {props.part.exercises}</p>
   )
